@@ -2,12 +2,13 @@ var express = require('express');
 
 var app = express();
 var server = app.listen(3000);
-
 app.use(express.static('public'));
 
 var socket = require('socket.io');
 var io = socket(server);
 
+const knownDevices = ['Blank','Blank2'];
+const proximityJudgmentValue = 60;
 
 const os = require('os');
 
@@ -27,14 +28,18 @@ if (os.platform() === 'win32') {
 }
 
 const noble = module.exports;
-const knownDevices = ['56:88:25:78:5f:66','5e:fa:26:84:d4:0d'];
 
+const checkDevice = (name) => {
+    for (let i = 0; i < knownDevices.length; i++) {
+        if (knownDevices[i] == name) return 1;
+    }
+    return 0;
+}
 
-
-
-
-console.log('noble');
-console.log("My socket server is running");
+const proximityJudgment = (rssi) => {
+    if (rssi < proximityJudgmentValue) return 1;
+    return 0;
+}
 
 const discovered = (peripheral) => {
     const device = {
@@ -44,16 +49,9 @@ const discovered = (peripheral) => {
         address: peripheral.address
     };
 
-    var exist = 0;
-    for (let i = 0; i < knownDevices.length; i++) {
-        if (knownDevices[i] == device.name) {
-            exist = 1;
-            break;
-        }
-    }
-    if (exist == 1) {
-        console.log(device.address);
-        io.emit(device.address);
+    if (checkDevice(device.name) == 1 && proximityJudgment(device.rssi) == 1) {
+        console.log(device.name + ': ' + device.address + ', RSSI: ' + device.rssi);
+        io.emit('address', device.name); // or device.address
     }
 }
 
@@ -62,18 +60,17 @@ const scanStart = () => {
     noble.on('discover', discovered);
 }
 
-io.sockets.on('connection', newConnection);
-
 function newConnection(socket) {
     console.log('new connection: ' + socket.id);
 
     if(noble.state === 'poweredOn'){
         scanStart();
-    }else{
+    } else {
         noble.on('stateChange', scanStart);
     }
 }
 
 
-// io.emit('address', '5e:fa:26:84:d4:0d');
-
+console.log('noble');
+console.log("My socket server is running");
+io.sockets.on('connection', newConnection);
