@@ -10,12 +10,30 @@
   "keywords": [
     "sockets",
     "p5.js",
-    "node"
+    "node",
+    "bluetooth",
+    "BLE",
+    "noble",
+    "bluetooth low energy",
+    "windows 10",
+    "winrt"
   ],
   "author": "kame",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "socket.io": "^2.3.0"
-  }
+    "socket.io": "^2.3.0",
+    "chrome-native-messaging": "^0.2.0",
+    "debug": "^2.6.8",
+    "noble": "^1.7.0"
+  },
+  "engines": {
+    "node": ">=6.4.0"
+  },
+  "files": [
+    "bindings.js",
+    "index.js",
+    "prebuilt/BLEServer.exe",
+    "prebuilt/README.txt"
+  ]
 }
