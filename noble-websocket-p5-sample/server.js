@@ -8,7 +8,7 @@ var socket = require('socket.io');
 var io = socket(server);
 
 const knownDevices = ['Blank','Blank2'];
-const proximityJudgmentValue = 60;
+const proximityJudgmentValue = -45;
 
 const os = require('os');
 
@@ -37,7 +37,7 @@ const checkDevice = (name) => {
 }
 
 const proximityJudgment = (rssi) => {
-    if (rssi < proximityJudgmentValue) return 1;
+    if (rssi > proximityJudgmentValue) return 1;
     return 0;
 }
 
@@ -55,9 +55,13 @@ const discovered = (peripheral) => {
     }
 }
 
-const scanStart = () => {
+function scan() {
     noble.startScanning();
     noble.on('discover', discovered);
+}
+
+const scanStart = () => {
+    setInterval(scan, 2000);
 }
 
 function newConnection(socket) {
