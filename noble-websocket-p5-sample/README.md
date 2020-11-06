@@ -7,7 +7,7 @@ node server.js
 ```
 and open localhost:3000 in Browser.
 
-*register your ble beacon in `data.json`
+*Register your ble beacon in `data.json`
 
 # Noble (Node.js Bluetooth LE) Bindings for Windows
 
