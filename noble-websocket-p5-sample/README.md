@@ -1,3 +1,12 @@
+# BLE Beacon Proximity Estimation by Noble-winRT, websocket, and p5.js
+
+```javascript
+node server.js
+```
+and open localhost:3000 in Browser.
+
+* register your ble beacon in 'data.json'
+
 # Noble (Node.js Bluetooth LE) Bindings for Windows
 
 `noble-winrt` is a small UWP-to-noble bridge based on the [web-bluetooth-polyfill](https://github.com/urish/web-bluetooth-polyfill) project. It supports BLE connectivity on Windows without the need for a dongle and complicated driver set-up. It is similar to [noble-uwp](https://github.com/jasongin/noble-uwp) but may work better for some build processes. 
