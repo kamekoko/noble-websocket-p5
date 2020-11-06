@@ -1,8 +1,7 @@
 var socket;
 
-const addressList = ['Blank','Blank2'];
-var addressState = [addressList.length];
 const BEACON_NUM = 10;
+var addressState = [BEACON_NUM];
 
 function setup() {
     createCanvas(2000, 2000);
@@ -14,29 +13,20 @@ function setup() {
 }
 
 function newDrawing(data) {
-    console.log('device name: ' + data);
+    console.log('device: ' + data);
 
-    checkAddress(data);
+    addressState[data] = 1;
     drawEllipses();
-}
-
-function checkAddress(ad) {
-    for (let i = 0; i < addressList.length; i++) {
-        if (ad == addressList[i]) {
-            addressState[i] = 1;
-            return;
-        }
-    }
 }
 
 function drawEllipses() {
     for (let i = 0; i <= BEACON_NUM; i++) {
         push();
         if (addressState[i] == 1) fill(255,0,0);
-        ellipse(50 + 50*(i%(BEACON_NUM/2)), (i < (BEACON_NUM/2))?50:150, 20, 20);
+        const x = 50 + 50*(i%(BEACON_NUM/2));
+        const y = (i < (BEACON_NUM/2))?50:150;
+        ellipse(x, y, 20, 20);
+        // text(i, x - 5, y + 5);
         pop();
     }
 }
-
-// function draw() {
-// }
