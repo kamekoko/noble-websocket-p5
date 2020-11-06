@@ -1,4 +1,4 @@
-# BLE Beacon Proximity Estimation by Noble-winRT, websocket, and p5.js
+# BLE Beacon Proximity Detection by Noble, websocket, p5.js for Windows
 
 ```javascript
 node server.js
