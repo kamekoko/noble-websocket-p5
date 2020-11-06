@@ -1,6 +1,14 @@
 // port: 3000
 
-const devicesAddress = ['Blank','Blank2']; // devices address
+const fs = require('fs');
+
+const jsonObject = JSON.parse(fs.readFileSync('./data.json', 'utf8'));
+const devicesAddress = []; // devices address
+
+for (let i = 0; i < jsonObject.length; i++) {
+    devicesAddress[i] = jsonObject[i].name;
+}
+
 const proximityJudgmentValue = -45;
 const timeInterval = 1000; // time interval to get RSSI
 
@@ -14,6 +22,7 @@ var socket = require('socket.io');
 var io = socket(server);
 
 const os = require('os');
+const { json } = require('express');
 
 if (os.platform() === 'win32') {
     const ver = os.release().split('.').map(Number);
