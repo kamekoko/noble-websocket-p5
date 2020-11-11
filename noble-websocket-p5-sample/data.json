@@ -2,11 +2,31 @@
     {
         "id": 0,
         "name": "Blank",
-        "address": "11:11:11:11:11"
+        "address": "50:09:96:82:75:73"
     },
     {
         "id": 1,
         "name": "Blank2",
-        "address": "22:22:22:22:22"
+        "address": ""
+    },
+    {
+        "id": 2,
+        "name": "Fujitsu device",
+        "address": "00:01:90:8f:9a:cd"
+    },
+    {
+        "id": 3,
+        "name": "MiniBeacon_00354",
+        "address": ""
+    },
+    {
+        "id": 4,
+        "name": "MiniBeacon_00357",
+        "address": ""
+    },
+    {
+        "id": 5,
+        "name": "MiniBeacon_00358",
+        "address": ""
     }
 ]

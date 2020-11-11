@@ -10,10 +10,15 @@ function setup() {
 
     socket = io.connect('http://localhost:3000');
     socket.on('address', newDrawing);
+    socket.on('name', printName);
+}
+
+function printName(data) {
+    console.log('device: ' + data);
 }
 
 function newDrawing(data) {
-    console.log('device: ' + data);
+    // console.log('device: ' + data);
 
     addressState[data] = 1;
     drawEllipses();
@@ -24,9 +29,8 @@ function drawEllipses() {
         push();
         if (addressState[i] == 1) fill(255,0,0);
         const x = 50 + 50*(i%(BEACON_NUM/2));
-        const y = (i < (BEACON_NUM/2))?50:150;
+        const y = (i < (BEACON_NUM/2)) ? 50 : 150;
         ellipse(x, y, 20, 20);
-        // text(i, x - 5, y + 5);
         pop();
     }
 }

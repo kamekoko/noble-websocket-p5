@@ -6,11 +6,11 @@ const jsonObject = JSON.parse(fs.readFileSync('./data.json', 'utf8'));
 const devicesAddress = []; // devices address
 
 for (let i = 0; i < jsonObject.length; i++) {
-    devicesAddress[i] = jsonObject[i].name;
+    devicesAddress[i] = jsonObject[i].address;
 }
 
-const proximityJudgmentValue = -45;
-const timeInterval = 1000; // time interval to get RSSI
+const proximityJudgmentValue = -60;
+const timeInterval = 500; // time interval to get RSSI
 
 var express = require('express');
 
@@ -22,7 +22,7 @@ var socket = require('socket.io');
 var io = socket(server);
 
 const os = require('os');
-const { json } = require('express');
+// const { json } = require('express');
 
 if (os.platform() === 'win32') {
     const ver = os.release().split('.').map(Number);
@@ -64,13 +64,15 @@ const discovered = (peripheral) => {
         name: peripheral.advertisement.localName,
         uuid: peripheral.uuid,
         rssi: peripheral.rssi,
-        address: peripheral.address
+        address: peripheral.address,
+        uuid: peripheral.uuid
     };
-    const index = check(device.name,device.rssi);
+    const index = check(device.address,device.rssi);
 
     if (index >= 0) {
         console.log(device.name + ': ' + device.address + ', RSSI: ' + device.rssi);
         io.emit('address', index);
+        io.emit('name', device.name);
     }
 }
 
