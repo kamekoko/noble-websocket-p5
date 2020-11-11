@@ -1,13 +1,10 @@
 # BLE Beacon Proximity Detection by Noble, websocket, p5.js for Windows
 
-we use [noble-winrt](https://github.com/urish/noble-winrt) to detect the proximity ble beacons. (windows only)
+[noble-winrt](https://github.com/urish/noble-winrt) to detect the proximity ble beacons. (windows only)
 
 ```javascript
 node server.js
 ```
-and open localhost:3000 in Browser.
-
-*Register your ble beacon in `data.json`
 
 # Noble (Node.js Bluetooth LE) Bindings for Windows
 
