@@ -1,19 +1,19 @@
 // port: 3000
 
 const fs = require('fs');
+const os = require('os');
+require('date-utils');
 
 const jsonObject = JSON.parse(fs.readFileSync('./data.json', 'utf8'));
 const devicesAddress = []; // devices address
-
 for (let i = 0; i < jsonObject.length; i++) {
     devicesAddress[i] = jsonObject[i].address;
 }
-
-const proximityJudgmentValue = -60;
+const judgedDevices = [devicesAddress.length];
+const proximityJudgmentValue = -60; //threshold
 const timeInterval = 500; // time interval to get RSSI
 
-var express = require('express');
-
+const express = require('express');
 var app = express();
 var server = app.listen(3000);
 app.use(express.static('public'));
@@ -21,9 +21,8 @@ app.use(express.static('public'));
 var socket = require('socket.io');
 var io = socket(server);
 
-const os = require('os');
-// const { json } = require('express');
 
+// noble
 if (os.platform() === 'win32') {
     const ver = os.release().split('.').map(Number);
     if (!(ver[0] > 10 ||
@@ -38,10 +37,27 @@ if (os.platform() === 'win32') {
 } else {
     module.exports = require('noble');
 }
-
 const noble = module.exports;
-const judgedDevices = [devicesAddress.length];
 
+
+// log file
+require('date-utils');
+let now = new Date();
+const fileName = 'log/' + now.toFormat('YYYY-M-D-HH24-MI-SS.txt');
+fs.writeFile(fileName, '', function (err) {
+    if (err) { throw err; }
+    console.log(fileName);
+});
+
+function writeLog (data) {
+    fs.appendFile(fileName, data + '\n', (err) => {
+        if (err) throw err;
+        console.log(data);
+    })
+}
+
+
+// poximity detection
 const proximityJudgment = (rssi) => {
     return (rssi > proximityJudgmentValue) ? 1 : 0;
 }
@@ -70,7 +86,7 @@ const discovered = (peripheral) => {
     const index = check(device.address,device.rssi);
 
     if (index >= 0) {
-        console.log(device.name + ': ' + device.address + ', RSSI: ' + device.rssi);
+        writeLog(device.address + ',RSSI: ' + device.rssi + ',Time: ' + now.toFormat('HH24:MI:SS'));
         io.emit('address', index);
         io.emit('name', device.name);
     }
@@ -81,7 +97,7 @@ function scan() {
     noble.on('discover', discovered);
 }
 
-const scanStart = () => {
+function scanStart() {
     setInterval(scan, timeInterval);
 }
 
