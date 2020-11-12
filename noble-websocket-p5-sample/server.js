@@ -1,9 +1,5 @@
 // port: 3000
 
-const fs = require('fs');
-const os = require('os');
-require('date-utils');
-
 const jsonObject = JSON.parse(fs.readFileSync('./data.json', 'utf8'));
 const devicesAddress = []; // devices address
 for (let i = 0; i < jsonObject.length; i++) {
@@ -23,6 +19,7 @@ var io = socket(server);
 
 
 // noble
+const os = require('os');
 if (os.platform() === 'win32') {
     const ver = os.release().split('.').map(Number);
     if (!(ver[0] > 10 ||
@@ -41,9 +38,11 @@ const noble = module.exports;
 
 
 // log file
+const fs = require('fs');
 require('date-utils');
 let now = new Date();
 const fileName = 'log/' + now.toFormat('YYYY-M-D-HH24-MI-SS.txt');
+
 fs.writeFile(fileName, '', function (err) {
     if (err) { throw err; }
     console.log(fileName);
