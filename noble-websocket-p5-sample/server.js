@@ -1,13 +1,7 @@
 // port: 3000
 
+const fs = require('fs');
 const jsonObject = JSON.parse(fs.readFileSync('./data.json', 'utf8'));
-const devicesAddress = []; // devices address
-for (let i = 0; i < jsonObject.length; i++) {
-    devicesAddress[i] = jsonObject[i].address;
-}
-const judgedDevices = [devicesAddress.length];
-const proximityJudgmentValue = -60; //threshold
-const timeInterval = 500; // time interval to get RSSI
 
 const express = require('express');
 var app = express();
@@ -20,6 +14,7 @@ var io = socket(server);
 
 // noble
 const os = require('os');
+const { json } = require('express');
 if (os.platform() === 'win32') {
     const ver = os.release().split('.').map(Number);
     if (!(ver[0] > 10 ||
@@ -38,7 +33,6 @@ const noble = module.exports;
 
 
 // log file
-const fs = require('fs');
 require('date-utils');
 let now = new Date();
 const fileName = 'log/' + now.toFormat('YYYY-M-D-HH24-MI-SS.txt');
@@ -57,13 +51,18 @@ function writeLog (data) {
 
 
 // poximity detection
+const deviceNum = jsonObject.length;
+const judgedDevices = [deviceNum];
+const proximityJudgmentValue = -60; //threshold
+const timeInterval = 500; // time interval to get RSSI
+
 const proximityJudgment = (rssi) => {
     return (rssi > proximityJudgmentValue) ? 1 : 0;
 }
 
 const check = (address, rssi) => {
-    for (let i = 0; i < devicesAddress.length; i++) {
-        if (devicesAddress[i] == address) {
+    for (let i = 0; i < deviceNum; i++) {
+        if (jsonObject[i].address == address) {
             if (judgedDevices[i] == 1) break;
             if (proximityJudgment(rssi) == 1) {
                 judgedDevices[i] = 1;
@@ -85,9 +84,8 @@ const discovered = (peripheral) => {
     const index = check(device.address,device.rssi);
 
     if (index >= 0) {
-        writeLog(device.address + ',RSSI: ' + device.rssi + ',Time: ' + now.toFormat('HH24:MI:SS'));
+        writeLog(now.toFormat('HH24:MI:SS') + ", " + "address: " + device.address + ', RSSI: ' + device.rssi);
         io.emit('address', index);
-        io.emit('name', device.name);
     }
 }
 
@@ -100,8 +98,17 @@ function scanStart() {
     setInterval(scan, timeInterval);
 }
 
+function setMap() {
+    io.emit('deviceNum', deviceNum);
+    for (let i = 0; i < deviceNum; i++) {
+        io.emit('deviceLoc', i + "," + jsonObject[i].x + "," + jsonObject[i].y);
+    }
+}
+
 function newConnection(socket) {
     console.log('new connection: ' + socket.id);
+
+    setMap();
 
     if(noble.state === 'poweredOn'){
         scanStart();
