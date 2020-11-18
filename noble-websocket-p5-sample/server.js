@@ -35,7 +35,7 @@ const noble = module.exports;
 // log file
 require('date-utils');
 let now = new Date();
-const fileName = 'log/' + now.toFormat('YYYY-M-D-HH24-MI-SS.txt');
+const fileName = 'log/' + now.toFormat('YYYY-M-D-HH24-MI-SS.csv');
 
 fs.writeFile(fileName, '', function (err) {
     if (err) { throw err; }
@@ -54,7 +54,7 @@ function writeLog (data) {
 const deviceNum = jsonObject.length;
 const judgedDevices = [deviceNum];
 const proximityJudgmentValue = -60; //threshold
-const timeInterval = 500; // time interval to get RSSI
+const timeInterval = 200; // time interval to get RSSI
 
 const proximityJudgment = (rssi) => {
     return (rssi > proximityJudgmentValue) ? 1 : 0;
@@ -82,7 +82,6 @@ const discovered = (peripheral) => {
         uuid: peripheral.uuid
     };
     const index = check(device.address,device.rssi);
-    // if (device.rssi > -50) console.log(device.address);
 
     if (index >= 0) {
         now = new Date();
