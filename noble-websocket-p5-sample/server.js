@@ -82,9 +82,11 @@ const discovered = (peripheral) => {
         uuid: peripheral.uuid
     };
     const index = check(device.address,device.rssi);
+    // if (device.rssi > -50) console.log(device.address);
 
     if (index >= 0) {
-        writeLog(now.toFormat('HH24:MI:SS') + ", " + "address: " + device.address + ', RSSI: ' + device.rssi);
+        now = new Date();
+        writeLog(now.toFormat('HH24:MI:SS') + "," + device.address + ',' + device.rssi);
         io.emit('address', index);
     }
 }

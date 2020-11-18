@@ -23,21 +23,21 @@
     {
         "id": 3,
         "name": "MiniBeacon_00354",
-        "address": "",
+        "address": "e5:6a:f2:7c:13:39",
         "x": 200,
         "y": 50
     },
     {
         "id": 4,
         "name": "MiniBeacon_00357",
-        "address": "",
+        "address": "ed:93:ac:77:b6:4c",
         "x": 250,
         "y": 50
     },
     {
         "id": 5,
         "name": "MiniBeacon_00358",
-        "address": "",
+        "address": "eb:66:04:68:5f:75",
         "x": 50,
         "y": 150
     }
