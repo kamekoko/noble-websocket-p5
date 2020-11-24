@@ -15,7 +15,7 @@ node server.js
 
 Install with npm or yarn:
 ```javascript
-npm install --save noble-winrt
+npm install noble-winrt
 npm install date-utils
 ```
 Then simply use in place of `noble`:
