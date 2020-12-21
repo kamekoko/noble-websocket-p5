@@ -1,0 +1,44 @@
+[
+    {
+        "id": 0,
+        "name": "Blank",
+        "address": "50:09:96:82:75:73",
+        "x": 50,
+        "y": 50
+    },
+    {
+        "id": 1,
+        "name": "Blank2",
+        "address": "",
+        "x": 100,
+        "y": 50
+    },
+    {
+        "id": 2,
+        "name": "Fujitsu device",
+        "address": "00:01:90:8f:9a:cd",
+        "x": 150,
+        "y": 50
+    },
+    {
+        "id": 3,
+        "name": "MiniBeacon_00354",
+        "address": "e5:6a:f2:7c:13:39",
+        "x": 200,
+        "y": 50
+    },
+    {
+        "id": 4,
+        "name": "MiniBeacon_00357",
+        "address": "ed:93:ac:77:b6:4c",
+        "x": 250,
+        "y": 50
+    },
+    {
+        "id": 5,
+        "name": "MiniBeacon_00358",
+        "address": "eb:66:04:68:5f:75",
+        "x": 300,
+        "y": 50
+    }
+]
