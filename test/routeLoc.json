@@ -1,0 +1,33 @@
+[
+    {
+        "id" : 0,
+        "x" : 0,
+        "y" : 2.5,
+        "routeNum" : 0,
+        "isStartPoint" : 1,
+        "isEndPoint" : 0
+    },
+    {
+        "id" : 1,
+        "x" : 2.5,
+        "y" : 2.5,
+        "routeNum" : 0,
+        "isStartPoint" : 0,
+        "isEndPoint" : 1
+    },
+    {
+        "id" : 2,
+        "x" : 0,
+        "y" : 7.5,
+        "isStartPoint" : 1,
+        "isEndPoint" : 0
+    },
+    {
+        "id" : 3,
+        "x" : 2.5,
+        "y" : 7.5,
+        "routeNum" : 1,
+        "isStartPoint" : 0,
+        "isEndPoint" : 1
+    }
+]

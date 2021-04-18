@@ -1,0 +1,49 @@
+[
+    {
+        "tree" : [
+            {"id" : 1, "coordinate" : [5, 5]},
+            {"id" : 2, "coordinate" : [7.5, 5]},
+            {"id" : 3, "coordinate" : [10, 5]},
+            {"id" : 4, "coordinate" : [12.5, 5]},
+            {"id" : 5, "coordinate" : [5, 10]},
+            {"id" : 6, "coordinate" : [7.5, 10]},
+            {"id" : 7, "coordinate" : [10, 10]},
+            {"id" : 8, "coordinate" : [12.5, 10]},
+            {"id" : 9, "coordinate" : [5, 15]},
+            {"id" : 10, "coordinate" : [7.5, 15]},
+            {"id" : 11, "coordinate" : [10, 15]},
+            {"id" : 12, "coordinate" : [12.5, 15]},
+            {"id" : 13, "coordinate" : [5, 20]},
+            {"id" : 14, "coordinate" : [7.5, 20]},
+            {"id" : 15, "coordinate" : [10, 20]},
+            {"id" : 16, "coordinate" : [12.5, 20]}
+        ],
+
+        "aisle" : [
+            { "id" : 1, "end-points-id" : [ 1, 4 ] },
+            { "id" : 2, "end-points-id" : [ 5, 8 ] },
+            { "id" : 3, "end-points-id" : [ 9, 12 ] }
+        ],
+
+        "spray-point" : [
+            { "id" : 1, "aisle-id" : 1, "trees-id" : [1, 5], "coordinate" : [5, 7.5] },
+            { "id" : 2, "aisle-id" : 1, "trees-id" : [2, 6], "coordinate" : [7.5, 7.5] },
+            { "id" : 3, "aisle-id" : 1, "trees-id" : [3, 7], "coordinate" : [10, 7.5] },
+            { "id" : 4, "aisle-id" : 1, "trees-id" : [4, 8], "coordinate" : [12.5, 7.5] },
+            { "id" : 5, "aisle-id" : 2, "trees-id" : [5, 9], "coordinate" : [5, 12.5] },
+            { "id" : 6, "aisle-id" : 2, "trees-id" : [6, 10], "coordinate" : [7.5, 12.5] },
+            { "id" : 7, "aisle-id" : 2, "trees-id" : [7, 11], "coordinate" : [10, 12.5] },
+            { "id" : 8, "aisle-id" : 2, "trees-id" : [8, 12], "coordinate" : [12.5, 12.5] },
+            { "id" : 9, "aisle-id" : 3, "trees-id" : [9, 13], "coordinate" : [5, 17.5] },
+            { "id" : 10, "aisle-id" : 3, "trees-id" : [10, 14], "coordinate" : [7.5, 17.5] },
+            { "id" : 11, "aisle-id" : 3, "trees-id" : [11, 15], "coordinate" : [10, 17.5] },
+            { "id" : 12, "aisle-id" : 3, "trees-id" : [12, 16], "coordinate" : [12.5, 17.5] }
+        ],
+
+        "beacon" : [
+            {"uuid" : "e5:6a:f2:7c:13:39", "coordinate" : [5, 5]},
+            {"uuid" : "ed:93:ac:77:b6:4c", "coordinate" : [7.5, 5]},
+            {"uuid" : "eb:66:04:68:5f:75", "coordinate" : [10, 5]}
+        ]
+    }
+]

@@ -14,7 +14,7 @@ const UNSPRAYED = 0;
 const SPRAYED = 1;
 
 function setup() {
-    createCanvas(900, 900);
+    createCanvas(500, 690);
     background(200,255,150);
     rectMode(CENTER);
 
@@ -29,7 +29,6 @@ function setup() {
 }
 
 function initilize(data) {
-    console.log(data);
     tree_low = data.low;
     tree_col = data.col;
     tree_num = tree_low * tree_col;
@@ -38,26 +37,34 @@ function initilize(data) {
     CR = data.CR;
     tree_state = [];
     for (let i = 0; i < tree_num; i++) {
-        tree_state[i] = UNSPRAYED;
+        if (i == 0 || i == 4 || i == 1 || i == 5) tree_state[i] = SPRAYED;
+        else tree_state[i] = UNSPRAYED;
     }
-    console.log("set complete");
     drawMap();
 }
 
 function drawMap() {
+    console.log("estimated location : " + null);
     for (let i = 0; i < tree_col; i++) {
         for (let j = 0; j < tree_low; j++) {
             push();
             // fill(255,165,0);
             if (tree_state[tree_col * i + j] == SPRAYED) fill(255, 0, 0);
             rect(3/CR+(tree_len*j), 3/CR+(tree_wid*i), 20, 20);
-            console.log(i + "," + j + " : " + (50+(tree_len*j)) + "," + (50+(tree_wid*i)));
             pop();
             push();
-            fill(0, 0, 255);
-            stroke(0, 0, 255);
-            ellipse(50+tree_len*j, 50+tree_wid/2+tree_wid*i, 5, 5);
-            if (j != 0) line(50+tree_len*(j-1), 50+tree_wid/2+tree_wid*i, 50+tree_len*j, 50+tree_wid/2+tree_wid*i);
+            stroke(190, 213, 221);
+            if (i == 0 && j == 1) line(3/CR+tree_len*(j-1), 3/CR+tree_wid/2+tree_wid*i, 3/CR+tree_len*j, 3/CR+tree_wid/2+tree_wid*i);
+            if (j == 1 && i == 0) {
+                fill(0, 0, 255);
+                console.log("estimated location : [0, 2.5]");
+                ellipse(3/CR+tree_len*j, 3/CR+tree_wid/2+tree_wid*i, 20, 20);
+            }
+            if (j == 0 && i == 0) {
+                fill(190, 213, 221);
+                console.log("estimated location : [5, 2.5]");
+                ellipse(3/CR+tree_len*j, 3/CR+tree_wid/2+tree_wid*i, 20, 20);
+            }
             pop();
         }
     }

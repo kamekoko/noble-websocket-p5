@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>CameraControlWithMouseSample</title>
+        <script src="https://resource.mapray.com/mapray-js/v0.8.5/mapray.min.js"></script>
+        <link rel="stylesheet" href="https://resource.mapray.com/styles/v1/mapray.css">
+        <script src="CameraControlWithMouse.js"></script>
+        <script src="CheckInputKeyAndMouse.js"></script>
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                background-color: #E0E0E0;
+            }
+
+            p{
+                font-size:13px;
+            }
+
+            div#mapray-container {
+                display: flex;
+                position: relative;
+                height: calc(100% - 34px);
+            }
+
+            div#LongitudeStringBox {
+                display: flex;
+                background-color: #E0E0E0;
+                height: 32px;
+                width: 160px;
+                float: left;
+                border: inset 1px #000000;
+                align-items: center;
+            }
+
+            div#LatitudeStringBox {
+                display: flex;
+                background-color: #E0E0E0;
+                height: 32px;
+                width: 160px;
+                float: left;
+                border: inset 1px #000000;
+                align-items: center;
+            }
+
+            div#HeightStringBox {
+                display: flex;
+                background-color: #E0E0E0;
+                height: 32px;
+                width: 160px;
+                float: left;
+                border: inset 1px #000000;
+                align-items: center;
+            }
+        </style>
+    </head>
+
+    <body onload="new CameraControl('mapray-container');">
+        <div id="mapray-container"></div>
+
+        <div id="LongitudeStringBox">
+            <p style="margin-left:5px;">Longitude:</p>
+            <p id="LongitudeValue">0</p>
+        </div>
+
+        <div id="LatitudeStringBox">
+            <p style="margin-left:5px;">Latitude:</p>
+            <p id="LatitudeValue">0</p>
+        </div>
+
+        <div id="HeightStringBox">
+            <p style="margin-left:5px;">Height:</p>
+            <p id="HeightValue">0</p>
+        </div>
+    </body>
+</html>

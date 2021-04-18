@@ -5,7 +5,7 @@ var now = new Date();
 
 let createRssi = () => {
     var min = -80;
-    var max = -50;
+    var max = -60;
     let rssi = Math.floor(Math.random() * (max + 1 - min)) + min;
     return  rssi;
 }
@@ -22,6 +22,26 @@ function calcEuclideanDistance(trilat, point) {
 const isRouteOff = 0;
 const isRouteOn = 1;
 const closeRange = 2;
+
+class History {
+    constructor() {
+        this.size = 0;
+        this.history = [];
+    }
+    // push() {
+    //     if (this.size == 0) return null;
+    //     var loc = this.history[size];
+    //     size--;
+    //     return loc;
+    // }
+    pop(loc) {
+        this.history[this.size] = loc;
+        this.size++;
+    }
+    getPreLocation() {
+        return (this.size == 0) ? null : this.history[this.size - 1];
+    }
+}
 
 class Beacon { // beacon for trilateration (three only)
     constructor(_index, _x, _y) {
@@ -62,12 +82,19 @@ class State {
     setRoutes(jsonObject2) {
         this.routes = [];
         this.startPoints = [];
-        var count = 0;
+        this.endPoints = [];
+        var spCount = 0;
+        var epCount = 0;
         for (let i = 0; i < jsonObject2.length; i++) {
             this.routes[i] = jsonObject2[i];
-            if (this.routes[i].isStartPoint == 0) continue;
-            this.startPoints[count] = this.routes[i];
-            count++;
+            if (this.routes[i].isStartPoint == 1) {
+                this.startPoints[spCount] = this.routes[i];
+                spCount++;
+            }
+            else if (this.routes[i].isEndPoint == 1) {
+                this.endPoints[epCount] = this.routes[i];
+                epCount++;
+            }
         }
     }
     getTopThreeRssi() {
@@ -111,6 +138,15 @@ class State {
                 break;
             }
         }
+        else {
+            if (this.endPoints.includes(this.prePoint)) {
+                this.state == isRouteOff;
+            }
+            else {
+                let next = this.routes[this.prePoint.id + 1];
+                if (trilat[0] >= next.x) this.prePoint = next;
+            }
+        }
     }
     showState() {
         if (this.prePoint == null) console.log("estimated location : null");
@@ -120,17 +156,22 @@ class State {
 
 // output
 var state = new State();
+var state = new State();
 
 // for (let i = 0; i < state.beacons.length; i++) {
 //     state.beacons[i].updateRssi(createRssi());
 // }
 
-state.beacons[0].updateRssi(-69);
-state.beacons[1].updateRssi(-78);
+
+state.beacons[0].updateRssi(-76);
+state.beacons[1].updateRssi(-76);
 state.beacons[2].updateRssi(-75);
-state.beacons[3].updateRssi(-94);
-state.beacons[4].updateRssi(-88);
-state.beacons[5].updateRssi(-90);
+state.beacons[3].updateRssi(-78);
+state.beacons[4].updateRssi(-90);
+state.beacons[5].updateRssi(-89);
+
+state.state = isRouteOn;
+state.prePoint = state.startPoints[0];
 
 console.log("input : ");
 for (let i = 0; i < state.beacons.length; i++) {
@@ -144,5 +185,6 @@ var output = trilat(state.getTrilatInput(input[0], input[1], input[2]));
 console.log();
 console.log("trilateration output : [" + output[0] + ", " + output[1] + "]");
 
+console.log("previous location : [" + state.prePoint.x + "," + state.prePoint.y + "]");
 state.updateLocation(output);
 state.showState();
