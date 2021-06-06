@@ -42,9 +42,9 @@ const proximityJudgment = (rssi) => {
     return (rssi > proximityJudgmentValue) ? 1 : 0;
 }
 
-const check = (address, rssi) => {
+const check = (name, rssi) => {
     for (let i = 0; i < deviceNum; i++) {
-        if (jsonObject[i].address == address) {
+        if (jsonObject[i].name == name) {
             if (judgedDevices[i] == 1) break;
             if (proximityJudgment(rssi) == 1) {
                 judgedDevices[i] = 1;
@@ -63,7 +63,7 @@ const discovered = (peripheral) => {
         address: peripheral.address,
         uuid: peripheral.uuid
     };
-    const index = check(device.address,device.rssi);
+    const index = check(device.name,device.rssi);
 
     if (index >= 0) {
         now = new Date();
